@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userControllers = require('../controllers/userControllers')
+const companyControllers = require('../controllers/companyControllers')
 /* GET users listing. */
 
 // localhost:3000/users
-router.get('/', userControllers.index);
+router.get('/', companyControllers.index);
 
 // localhost:3000/users/login
-router.get('/login', userControllers.login);
 
 module.exports = router;
