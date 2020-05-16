@@ -1,18 +1,21 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var companyRouter = require('./routes/company');
-var app = express();
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const companyRouter = require('./routes/company');
+const staffRouter = require('./routes/staff');
+
+const app = express();
 
 mongoose.connect('mongodb+srv://admin:admin@clustertest-wy2pg.mongodb.net/test_node_api?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 app.use(logger('dev'));
@@ -24,5 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/company', companyRouter);
+app.use('/staff', staffRouter);
 
 module.exports = app;
