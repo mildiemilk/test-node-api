@@ -7,6 +7,8 @@ const shopControllers = require('../controllers/shopControllers')
 router.get('/', shopControllers.index);
 
 router.get('/menu', shopControllers.menu);
+router.get('/:id', shopControllers.getShopWithMenu);
+router.post('/', shopControllers.insert)
 
 // localhost:3000/users/login
 

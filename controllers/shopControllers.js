@@ -27,9 +27,31 @@ exports.menu = async (req, res, next) => {
   // const menu = await Menu.find({
   //   price: { $lt: 100 }
   // })
-  const menu = await Menu.find()
+  const menu = await Menu.find().populate('shop', 'name location')
 
   res.status(200).json({
     data: menu
+  })
+}
+
+// get shop by id with menu
+exports.getShopWithMenu = async (req, res, next) => {
+  const { id } = req.params
+  const shopWithMenu = await Shop.findById(id).populate('menus')
+
+  res.status(200).json({
+    data: shopWithMenu
+  })
+}
+
+exports.insert = async (req, res, next) => {
+  const { name, location } = req.body
+  const shop = new Shop({
+    name,
+    location
+  })
+  await shop.save();
+  res.status(201).json({
+    message: 'Add shop done'
   })
 }
