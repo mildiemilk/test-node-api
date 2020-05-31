@@ -7,6 +7,7 @@ const { Storage } = require('@google-cloud/storage');
 const stream = require('stream');
 const Shop = require('../models/shop')
 const Menu = require('../models/menu')
+const config = require('../config/index')
 
 exports.index = async (req, res, next) => {
   const shop = await Shop.find().select('name photo location').sort({ photo: -1 })
@@ -15,7 +16,7 @@ exports.index = async (req, res, next) => {
     return {
       id: item._id,
       name: shop.name,
-      photo: `http://localhost:3000/images/${item.photo}`,
+      photo: `${config.DOMAIN}/images/${item.photo}`,
       location: shop.location,
     }
   }

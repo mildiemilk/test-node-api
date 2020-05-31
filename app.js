@@ -9,10 +9,11 @@ const usersRouter = require('./routes/users');
 const companyRouter = require('./routes/company');
 const staffRouter = require('./routes/staff');
 const shopRouter = require('./routes/shop');
+const config = require('./config/index');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://admin:admin@clustertest-wy2pg.mongodb.net/test_node_api?retryWrites=true&w=majority', {
+mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
