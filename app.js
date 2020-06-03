@@ -10,7 +10,8 @@ const companyRouter = require('./routes/company');
 const staffRouter = require('./routes/staff');
 const shopRouter = require('./routes/shop');
 const config = require('./config/index');
-
+// import middleware
+const errorHandler = require('./middleware/errorHandlers')
 const app = express();
 
 mongoose.connect(config.MONGODB_URI, {
@@ -29,9 +30,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/company', companyRouter);
 app.use('/shop', shopRouter);
 app.use('/staff', staffRouter);
+
+//Use middleware
+app.use(errorHandler)
 
 module.exports = app;
