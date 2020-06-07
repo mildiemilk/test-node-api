@@ -1,4 +1,7 @@
 const User = require('../models/user')
+const { validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 
 exports.index = (req, res, next) => {
   res.status(200).json({
@@ -6,10 +9,42 @@ exports.index = (req, res, next) => {
   })
 }
 
-exports.login = (req, res, next) => {
-  res.status(200).json({
-    message: 'Login'
-  })
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body
+
+  try {
+    const user = await User.findOne({ email })
+    console.log('user:', user)
+    if (!user) {
+      const error = new Error('User is not found')
+      error.statusCode = 404
+      throw error
+    }
+    const isValidPassword = await user.checkPassword(password)
+    if (!isValidPassword) {
+      const error = new Error('Wrong password')
+      error.statusCode = 401
+      throw error
+    }
+
+    // create token
+    // gen secret key from 'grc.com/passwords.html
+    const token = await jwt.sign({
+      id: user._id,
+      role: user.role
+    }, config.JWT_SECRET, { expiresIn: '5 days' })
+
+    // decode expire date
+    const expires_in = jwt.decode(token)
+    res.status(200).json({
+      access_token: token,
+      expiresIn: expires_in.exp,
+      token_type: 'Bearer'
+    })
+
+  } catch (e) {
+    next(e)
+  }
 }
 
 exports.register = async (req, res, next) => {
