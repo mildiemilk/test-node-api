@@ -17,6 +17,14 @@ exports.register = async (req, res, next) => {
   // Check email duplicate
 
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Data incorrect')
+      error.statusCode = 422
+      error.validation = errors.array()
+      throw error
+    }
+
     const existEmail = await User.findOne({ email })
     if (existEmail) {
       const error = new Error('email duplicate')
