@@ -81,3 +81,15 @@ exports.register = async (req, res, next) => {
     next(e)
   }
 }
+
+exports.me = (req, res, next) => {
+  console.log('req:', req)
+  res.status(200).json({
+    user: {
+      id: req.user._id,
+      email: req.user.email,
+      role: req.user.role,
+      name: req.user.name
+    }
+  })
+}
