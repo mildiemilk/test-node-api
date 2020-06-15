@@ -4,6 +4,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const helmet = require('helmet')
+const rateLimit = require('express-rate-limit')
+const cors = require('cors')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -11,11 +14,20 @@ const companyRouter = require('./routes/company');
 const staffRouter = require('./routes/staff');
 const shopRouter = require('./routes/shop');
 const config = require('./config/index');
+
 // import middleware
 const errorHandler = require('./middleware/errorHandlers')
 const app = express();
 
+const limiter = rateLimit({
+  windowMs: 10 * 1000, // 10 minutes
+  max: 5 // limit each IP to 100 requests per windowMs
+});
+
+app.use(cors())
 app.use(passport.initialize())
+app.use(helmet())
+app.use(limiter)
 
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
