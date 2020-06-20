@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "preinstall": "yarn install -g pm2",
+    "preinstall": "yarn add -g pm2",
     "start": "pm2-runtime ./bin/www -i max"
   },
   "dependencies": {
