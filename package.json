@@ -27,5 +27,8 @@
     "express-validator": "^6.5.0",
     "nodemon": "^2.0.3",
     "uuid": "^8.1.0"
+  },
+  "engines": {
+    "node": "12.11.1"
   }
 }
