@@ -19,9 +19,7 @@
     "morgan": "~1.9.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "express-validator": "^6.5.0"
-  },
-  "devDependencies": {
+    "express-validator": "^6.5.0",
     "@google-cloud/storage": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
